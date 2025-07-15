@@ -10,9 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-    
-      - name: Check Build Number
-        run: echo "Build Number: ${{ github.run_number }}"
       
       - name: Check PR Number
         run: echo "PR Number: ${{ github.event.pull_request.number }}"
