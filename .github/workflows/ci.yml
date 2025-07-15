@@ -11,10 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Check PR Number
-        run: echo "PR Number: ${{ github.event.pull_request.number }}"
+      - name: Set PR Number
+        run: |
+          PR_NUMBER=$(gh pr list --repo ${{ github.repository }} --state closed --json number,mergeCommit --jq ".[] | select(.mergeCommit.oid == \"${{ github.sha }}\") | .number")
+          echo "PR_NUMBER=${PR_NUMBER}"
+          echo "PR_NUMBER"="${PR_NUMBER}" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
       
       - name: Set Docker Image Tag
         run: |
