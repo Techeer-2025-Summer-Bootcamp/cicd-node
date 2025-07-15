@@ -37,13 +37,13 @@ jobs:
       
       - name: Build Docker Image
         env:
-          PR_NUMBER: ${{ steps.get_pr_number.outputs.PR_NUMBER }} 
+          DOCKER_IMAGE_TAG: ${{ steps.get_pr_number.outputs.DOCKER_IMAGE_TAG }} 
         run: |
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPO }}:${{ env.DOCKER_IMAGE_TAG }} .
       
       - name: Push Docker Image
         env:
-          PR_NUMBER: ${{ steps.get_pr_number.outputs.PR_NUMBER }} 
+          DOCKER_IMAGE_TAG: ${{ steps.get_pr_number.outputs.DOCKER_IMAGE_TAG }} 
         run: |
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPO }}:${{ env.DOCKER_IMAGE_TAG }}
         
