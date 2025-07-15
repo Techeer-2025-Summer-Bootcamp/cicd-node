@@ -35,10 +35,14 @@ jobs:
           echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
       
       - name: Build Docker Image
+        env:
+          PR_NUMBER: ${{ steps.get_pr_number.outputs.PR_NUMBER }} 
         run: |
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPO }}:${{ env.DOCKER_IMAGE_TAG }} .
       
       - name: Push Docker Image
+        env:
+          PR_NUMBER: ${{ steps.get_pr_number.outputs.PR_NUMBER }} 
         run: |
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPO }}:${{ env.DOCKER_IMAGE_TAG }}
         
