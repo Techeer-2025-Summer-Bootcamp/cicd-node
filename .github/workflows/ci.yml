@@ -21,6 +21,7 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
       
       - name: Set Docker Image Tag
+        id: get_pr_number
         run: |
           PR_NUMBER=$(gh pr list --repo ${{ github.repository }} --state closed --json number,mergeCommit --jq ".[] | select(.mergeCommit.oid == \"${{ github.sha }}\") | .number")
           DOCKER_IMAGE_TAG="1.1.$PR_NUMBER"
